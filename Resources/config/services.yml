@@ -1,0 +1,20 @@
+services:
+    krg.message.listener:
+        class: KRG\MessageBundle\Listener\MessageListener
+        arguments: [@krg.message.sender.registry, @templating]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    krg.message.sender.registry:
+        class: KRG\MessageBundle\Sender\SenderRegistry
+        arguments: [[]]
+        calls:
+          - [setContainer, [@service_container]]
+
+    krg.message.sender:
+        abstract:  true
+        class: KRG\MessageBundle\Sender\Sender
+        arguments: [ null ]
+
+    krg.message.helper.mailer:
+        class: KRG\MessageBundle\Sender\Helper\Mailer
