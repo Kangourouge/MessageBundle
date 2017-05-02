@@ -26,7 +26,7 @@ class Esendex implements SenderHelperInterface {
         $this->esendex = new DispatchService($authentication);
     }
 
-    public function send($to, $body, $subject = null, $from = null, array $bcc = array())
+    public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
     {
         $message = new DispatchMessage($from ?: "Message", $to, $body, Message::SmsType);
         return $this->esendex->send($message);

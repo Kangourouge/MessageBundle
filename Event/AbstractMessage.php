@@ -8,7 +8,6 @@ use Symfony\Component\Templating\EngineInterface;
 
 abstract class AbstractMessage extends Event implements MessageInterface
 {
-
     public function getFrom()
     {
         return null;
@@ -24,9 +23,13 @@ abstract class AbstractMessage extends Event implements MessageInterface
         return 'mailer';
     }
 
+    public function getAttachments() {
+        return array();
+    }
+
     public function send(SenderInterface $sender, EngineInterface $templating)
     {
-        return $sender->send($this->getTo(), $this->getBody($templating), $this->getSubject(), $this->getFrom(), $this->getBcc());
+        return $sender->send($this->getTo(), $this->getBody($templating), $this->getSubject(), $this->getFrom(), $this->getBcc(), $this->getAttachments());
     }
 
 }

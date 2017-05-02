@@ -38,6 +38,11 @@ interface MessageInterface
     public function getBcc();
 
     /**
+     * @return \Swift_Attachment[]
+     */
+    public function getAttachments();
+
+    /**
      * @param SenderInterface $sender
      * @return mixed
      */

@@ -35,8 +35,8 @@ class Sender implements SenderInterface {
         $this->bcc = $bcc;
     }
 
-    public function send($to, $body, $subject = null, $from = null, array $bcc = array())
+    public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
     {
-        return $this->helper->send($to, $body, $subject, $from ?: $this->from, array_merge($bcc, $this->bcc));
+        return $this->helper->send($to, $body, $subject, $from ?: $this->from, array_merge($bcc, $this->bcc), $attachments);
     }
 }
