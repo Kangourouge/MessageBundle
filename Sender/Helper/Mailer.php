@@ -47,8 +47,7 @@ class Mailer implements SenderHelperInterface {
             }
             $message->attach($attachment);
         }
-dump($message);
-//        die;
+
         return $this->mailer->send($message);
     }
 }
