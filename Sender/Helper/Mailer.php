@@ -31,15 +31,12 @@ class Mailer implements SenderHelperInterface {
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setTo('celmechrafi@kangourouge.com')
+            ->setTo($to)
+            ->setFrom($from)
             ->setBcc($bcc)
             ->setBody($body)
             ->setContentType('text/html')
         ;
-
-        if ($from !== null) {
-            $message->setFrom($from);
-        }
 
         foreach ($attachments as $attachment) {
             if (!$attachment instanceof \Swift_Attachment) {
