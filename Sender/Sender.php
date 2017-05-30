@@ -4,8 +4,8 @@ namespace KRG\MessageBundle\Sender;
 
 use KRG\MessageBundle\Sender\Helper\SenderHelperInterface;
 
-class Sender implements SenderInterface {
-
+class Sender implements SenderInterface
+{
     /**
      * @var SenderHelperInterface
      */

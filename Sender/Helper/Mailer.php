@@ -2,8 +2,8 @@
 
 namespace KRG\MessageBundle\Sender\Helper;
 
-class Mailer implements SenderHelperInterface {
-
+class Mailer implements SenderHelperInterface
+{
     /**
      * @var \Swift_Mailer
      */
@@ -35,8 +35,7 @@ class Mailer implements SenderHelperInterface {
             ->setFrom($from)
             ->setBcc($bcc)
             ->setBody($body)
-            ->setContentType('text/html')
-        ;
+            ->setContentType('text/html');
 
         foreach ($attachments as $attachment) {
             if (!$attachment instanceof \Swift_Attachment) {

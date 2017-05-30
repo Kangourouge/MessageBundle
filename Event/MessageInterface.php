@@ -44,6 +44,7 @@ interface MessageInterface
 
     /**
      * @param SenderInterface $sender
+     *
      * @return mixed
      */
     public function send(SenderInterface $sender, EngineInterface $templating);
