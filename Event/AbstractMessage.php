@@ -23,7 +23,8 @@ abstract class AbstractMessage extends Event implements MessageInterface
         return 'mailer';
     }
 
-    public function getAttachments() {
+    public function getAttachments()
+    {
         return array();
     }
 
@@ -31,5 +32,4 @@ abstract class AbstractMessage extends Event implements MessageInterface
     {
         return $sender->send($this->getTo(), $this->getBody($templating), $this->getSubject(), $this->getFrom(), $this->getBcc(), $this->getAttachments());
     }
-
 }

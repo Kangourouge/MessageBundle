@@ -4,9 +4,7 @@ namespace KRG\MessageBundle\Listener;
 
 use KRG\MessageBundle\Event\MessageEvents;
 use KRG\MessageBundle\Event\MessageInterface;
-use KRG\MessageBundle\Sender\SenderInterface;
 use KRG\MessageBundle\Sender\SenderRegistry;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -22,12 +20,14 @@ class MessageListener implements EventSubscriberInterface
      */
     private $templating;
 
-	/**
-	 * MessageListener constructor.
-	 * @param SenderRegistry $registry
-	 * @param EngineInterface $templating
-	 * @internal param SenderInterface $sender
-	 */
+    /**
+     * MessageListener constructor.
+     *
+     * @param SenderRegistry $registry
+     * @param EngineInterface $templating
+     *
+     * @internal param SenderInterface $sender
+     */
     public function __construct(SenderRegistry $registry, EngineInterface $templating)
     {
         $this->registry = $registry;
@@ -37,11 +37,12 @@ class MessageListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            MessageEvents::SEND => 'onSend'
+            MessageEvents::SEND => 'onSend',
         );
     }
 
-    public function onSend(MessageInterface $message) {
+    public function onSend(MessageInterface $message)
+    {
         $message->send($this->registry->get($message->getSender()), $this->templating);
     }
 }

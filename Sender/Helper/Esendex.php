@@ -7,8 +7,8 @@ use Esendex\DispatchService;
 use Esendex\Model\DispatchMessage;
 use Esendex\Model\Message;
 
-class Esendex implements SenderHelperInterface {
-
+class Esendex implements SenderHelperInterface
+{
     /**
      * @var DispatchService
      */
@@ -16,6 +16,7 @@ class Esendex implements SenderHelperInterface {
 
     /**
      * Sms constructor.
+     *
      * @param $account
      * @param $login
      * @param $password
@@ -29,6 +30,7 @@ class Esendex implements SenderHelperInterface {
     public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
     {
         $message = new DispatchMessage($from ?: "Message", $to, $body, Message::SmsType);
+
         return $this->esendex->send($message);
     }
 }
