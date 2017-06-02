@@ -50,7 +50,7 @@ class KRGMessageExtension extends Extension
                 ->register('krg.message.sender.'.$name, $config['class'])
                 ->addArgument($helper)
                 ->addArgument(isset($sender['from']) ? $sender['from'] : null)
-                ->addArgument(isset($sender['bcc']) ? $sender['bcc'] : null)
+                ->addArgument(isset($sender['bcc']) ? $sender['bcc'] : array())
                 ->addTag('message.sender', array('alias' => $name))
                 ;
         }
