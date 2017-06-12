@@ -19,14 +19,6 @@ class Mailer implements SenderHelperInterface
         $this->mailer = $mailer;
     }
 
-    /**
-     * @param \Swift_Mailer $mailer
-     */
-    public function setMailer(\Swift_Mailer $mailer)
-    {
-        $this->mailer = $mailer;
-    }
-
     public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
     {
         $message = \Swift_Message::newInstance()
