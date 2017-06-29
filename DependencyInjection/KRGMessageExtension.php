@@ -41,6 +41,7 @@ class KRGMessageExtension extends Extension
                     $container->setParameter('krg_message_esendex_account', $sender['account']);
                     $container->setParameter('krg_message_esendex_login', $sender['login']);
                     $container->setParameter('krg_message_esendex_password', $sender['password']);
+                    $container->setParameter('krg_message_esendex_from', $sender['from']);
                 }
 
                 $helper = new Reference($sender['helper']);
