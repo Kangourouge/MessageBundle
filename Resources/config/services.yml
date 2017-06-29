@@ -1,7 +1,7 @@
 services:
     krg.message.listener:
         class: KRG\MessageBundle\Listener\MessageListener
-        arguments: [@krg.message.sender.registry, @templating]
+        arguments: [@krg.message.sender.registry, @templating, @monolog.logger]
         tags:
             - { name: kernel.event_subscriber }
 

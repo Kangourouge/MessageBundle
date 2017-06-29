@@ -8,6 +8,16 @@ use Symfony\Component\Templating\EngineInterface;
 
 abstract class AbstractMessage extends Event implements MessageInterface
 {
+    /**
+     * @var boolean
+     */
+    protected $sent = false;
+
+    /**
+     * @var \Exception
+     */
+    protected $exception;
+
     public function getFrom()
     {
         return null;
@@ -26,6 +36,26 @@ abstract class AbstractMessage extends Event implements MessageInterface
     public function getAttachments()
     {
         return array();
+    }
+
+    public function isSent()
+    {
+        return $this->sent;
+    }
+
+    public function setSent($sent)
+    {
+        $this->sent = $sent;
+    }
+
+    public function getException()
+    {
+        return $this->exception;
+    }
+
+    public function setException(\Exception $exception)
+    {
+        $this->exception = $exception;
     }
 
     public function send(SenderInterface $sender, EngineInterface $templating)
