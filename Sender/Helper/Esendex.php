@@ -31,6 +31,8 @@ class Esendex implements SenderHelperInterface
     {
         $message = new DispatchMessage($from ?: "Message", $to, $body, Message::SmsType);
 
-        return $this->esendex->send($message);
+        $this->esendex->send($message);
+
+        return true;
     }
 }
