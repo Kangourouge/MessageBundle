@@ -1,4 +1,4 @@
 services:
     krg.message.helper.esendex:
         class: KRG\MessageBundle\Sender\Helper\Esendex
-        arguments: [ %krg_message_esendex_account%, %krg_message_esendex_login%, %krg_message_esendex_password% ]
+        arguments: ['%krg_message_esendex_account%', '%krg_message_esendex_login%', '%krg_message_esendex_password%']

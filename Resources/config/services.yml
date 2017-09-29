@@ -1,7 +1,7 @@
 services:
     krg.message.listener:
         class: KRG\MessageBundle\Listener\MessageListener
-        arguments: [@krg.message.sender.registry, @templating, @monolog.logger]
+        arguments: ['@krg.message.sender.registry', '@templating', '@monolog.logger']
         tags:
             - { name: kernel.event_subscriber }
 
@@ -9,7 +9,7 @@ services:
         class: KRG\MessageBundle\Sender\SenderRegistry
         arguments: [[]]
         calls:
-          - [setContainer, [@service_container]]
+          - [setContainer, ['@service_container']]
 
     krg.message.sender:
         abstract:  true
