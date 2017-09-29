@@ -1,20 +1,22 @@
 {
-    "name": "kangourouge/message-bundle",
-    "description": "Kangourouge Message Bundle",
-    "type": "symfony-bundle",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Chafiq El Mechrafi",
-            "email": "chafiq.elmechrafi@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.9",
-        "symfony/symfony": "^2.8|^3.0"
-    },
-    "autoload": {
-        "psr-0": { "KRG\\MessageBundle": "" }
-    },
-    "target-dir": "KRG/MessageBundle"
+  "name"       : "kangourouge/message-bundle",
+  "description": "Kangourouge Message Bundle",
+  "type"       : "symfony-bundle",
+  "license"    : "MIT",
+  "authors"    : [
+    {
+      "name" : "Chafiq El Mechrafi",
+      "email": "chafiq.elmechrafi@gmail.com"
+    }
+  ],
+  "require"    : {
+    "php"                     : ">=5.3.9",
+    "symfony/framework-bundle": "~2.1|~3.0"
+  },
+  "autoload"   : {
+    "psr-0": {
+      "KRG\\MessageBundle": ""
+    }
+  },
+  "target-dir" : "KRG/MessageBundle"
 }
