@@ -4,8 +4,8 @@ namespace KRG\MessageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use EMC\FileinputBundle\Entity\FileInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use EMC\FileinputBundle\Entity\FileInterface;
 use KRG\UserBundle\Entity\UserInterface;
 
 /**

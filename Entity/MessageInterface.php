@@ -2,6 +2,9 @@
 
 namespace KRG\MessageBundle\Entity;
 
+use EMC\FileinputBundle\Entity\FileInterface;
+use KRG\UserBundle\Entity\UserInterface;
+
 interface MessageInterface
 {
     /**
@@ -62,7 +65,7 @@ interface MessageInterface
     /**
      * Set user
      *
-     * @param \KRG\MessageBundle\Entity\UserInterface $user
+     * @param \KRG\UserBundle\Entity\UserInterface $user
      *
      * @return Message
      */
@@ -78,7 +81,7 @@ interface MessageInterface
     /**
      * Add attachment
      *
-     * @param \KRG\MessageBundle\Entity\FileInterface $attachment
+     * @param FileInterface $attachment
      *
      * @return Message
      */
@@ -87,7 +90,7 @@ interface MessageInterface
     /**
      * Remove attachment
      *
-     * @param \KRG\MessageBundle\Entity\FileInterface $attachment
+     * @param FileInterface $attachment
      */
     public function removeAttachment(FileInterface $attachment);
 
