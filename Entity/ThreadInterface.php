@@ -12,22 +12,6 @@ interface ThreadInterface
     public function getId();
 
     /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Thread
-     */
-    public function setTitle($title);
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle();
-
-    /**
      * Set active
      *
      * @param boolean $active
@@ -42,29 +26,6 @@ interface ThreadInterface
      * @return boolean
      */
     public function getActive();
-
-    /**
-     * Add user
-     *
-     * @param UserInterface $user
-     *
-     * @return Thread
-     */
-    public function addUser(UserInterface $user);
-
-    /**
-     * Remove user
-     *
-     * @param UserInterface $user
-     */
-    public function removeUser(UserInterface $user);
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers();
 
     /**
      * Add message
@@ -88,10 +49,4 @@ interface ThreadInterface
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getMessages();
-
-
-    /**
-     * @return UserInterface
-     */
-    public function createdBy();
 }

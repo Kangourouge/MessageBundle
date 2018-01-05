@@ -2,8 +2,8 @@
 
 namespace KRG\MessageBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -11,7 +11,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @package KRG\MessageBundle\Entity
  * @ORM\Entity()
  */
-class Thread implements ThreadInterface, \Serializable
+class Thread implements ThreadInterface
 {
     use TimestampableEntity;
 
@@ -23,24 +23,9 @@ class Thread implements ThreadInterface, \Serializable
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="KRG\UserBundle\Entity\UserInterface")
-     * @ORM\JoinTable(name="thread_users",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="thread_id", referencedColumnName="id", unique=true)}
-     * )
-     */
-    protected $users;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MessageInterface", mappedBy="thread")
+     * @ORM\OneToMany(targetEntity="MessageInterface", mappedBy="thread", cascade={"all"})
      */
     protected $messages;
-
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $title;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
@@ -50,30 +35,8 @@ class Thread implements ThreadInterface, \Serializable
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->active = true;
         $this->messages = new ArrayCollection();
-    }
-
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->users,
-            $this->messages,
-            $this->title,
-            $this->active,
-        ]);
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->users,
-            $this->messages,
-            $this->title,
-            $this->active,
-            ) = unserialize($serialized);
     }
 
     /**
@@ -84,30 +47,6 @@ class Thread implements ThreadInterface, \Serializable
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Thread
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -135,40 +74,6 @@ class Thread implements ThreadInterface, \Serializable
     }
 
     /**
-     * Add user
-     *
-     * @param UserInterface $user
-     *
-     * @return Thread
-     */
-    public function addUser(UserInterface $user)
-    {
-        $this->users[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param UserInterface $user
-     */
-    public function removeUser(UserInterface $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
      * Add message
      *
      * @param MessageInterface $message
@@ -178,6 +83,7 @@ class Thread implements ThreadInterface, \Serializable
     public function addMessage(MessageInterface $message)
     {
         $this->messages[] = $message;
+        $message->setThread($this);
 
         return $this;
     }
@@ -200,14 +106,5 @@ class Thread implements ThreadInterface, \Serializable
     public function getMessages()
     {
         return $this->messages;
-    }
-
-
-    /**
-     * @return UserInterface
-     */
-    public function createdBy()
-    {
-        return $this->getMessages()->first()->getUser();
     }
 }

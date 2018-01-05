@@ -2,6 +2,7 @@
 
 namespace KRG\MessageBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use EMC\FileinputBundle\Entity\FileInterface;
 use KRG\UserBundle\Entity\UserInterface;
 
@@ -13,22 +14,6 @@ interface MessageInterface
      * @return integer
      */
     public function getId();
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Message
-     */
-    public function setTitle($title);
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle();
 
     /**
      * Set body
@@ -100,4 +85,13 @@ interface MessageInterface
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttachments();
+
+    /**
+     * Set Attachments
+     *
+     * @param Collection $attachments
+     *
+     * @return $this
+     */
+    public function setAttachments(Collection $attachments);
 }

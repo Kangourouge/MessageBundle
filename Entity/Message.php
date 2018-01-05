@@ -3,6 +3,7 @@
 namespace KRG\MessageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use EMC\FileinputBundle\Entity\FileInterface;
@@ -13,7 +14,7 @@ use KRG\UserBundle\Entity\UserInterface;
  * @package KRG\MessageBundle\Entity
  * @ORM\Entity()
  */
-class Message implements MessageInterface, \Serializable
+class Message implements MessageInterface
 {
     use TimestampableEntity;
 
@@ -27,20 +28,16 @@ class Message implements MessageInterface, \Serializable
     /**
      * @ORM\ManyToOne(targetEntity="KRG\MessageBundle\Entity\ThreadInterface", inversedBy="messages")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
+     * @var ThreadInterface
      */
     protected $thread;
 
     /**
      * @ORM\ManyToOne(targetEntity="KRG\UserBundle\Entity\UserInterface")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var UserInterface
      */
     protected $user;
-
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $title;
 
     /**
      * @ORM\Column(type="text")
@@ -49,39 +46,18 @@ class Message implements MessageInterface, \Serializable
     protected $body;
 
     /**
-     * @ORM\ManyToMany(targetEntity="EMC\FileinputBundle\Entity\FileInterface")
-     * @ORM\JoinTable(name="message_attachments",
+     * @ORM\ManyToMany(targetEntity="EMC\FileinputBundle\Entity\FileInterface", cascade={"all"})
+     * @ORM\JoinTable(name="message__attachment",
      *      joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id", unique=true)}
      * )
+     * @var Collection
      */
     protected $attachments;
 
     public function __construct()
     {
         $this->attachments = new ArrayCollection();
-    }
-
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->thread,
-            $this->user,
-            $this->title,
-            $this->body,
-        ]);
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->thread,
-            $this->user,
-            $this->title,
-            $this->body,
-            ) = unserialize($serialized);
     }
 
     /**
@@ -92,30 +68,6 @@ class Message implements MessageInterface, \Serializable
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Message
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -145,7 +97,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Set thread
      *
-     * @param \KRG\MessageBundle\Entity\ThreadInterface $thread
+     * @param ThreadInterface $thread
      *
      * @return Message
      */
@@ -159,7 +111,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Get thread
      *
-     * @return \KRG\MessageBundle\Entity\ThreadInterface
+     * @return ThreadInterface
      */
     public function getThread()
     {
@@ -169,7 +121,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Set user
      *
-     * @param \KRG\MessageBundle\Entity\UserInterface $user
+     * @param UserInterface $user
      *
      * @return Message
      */
@@ -183,7 +135,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Get user
      *
-     * @return \KRG\MessageBundle\Entity\UserInterface
+     * @return UserInterface
      */
     public function getUser()
     {
@@ -193,7 +145,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Add attachment
      *
-     * @param \KRG\MessageBundle\Entity\FileInterface $attachment
+     * @param FileInterface $attachment
      *
      * @return Message
      */
@@ -207,7 +159,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Remove attachment
      *
-     * @param \KRG\MessageBundle\Entity\FileInterface $attachment
+     * @param FileInterface $attachment
      */
     public function removeAttachment(FileInterface $attachment)
     {
@@ -222,5 +174,19 @@ class Message implements MessageInterface, \Serializable
     public function getAttachments()
     {
         return $this->attachments;
+    }
+
+    /**
+     * Set Attachments
+     *
+     * @param Collection $attachments
+     *
+     * @return $this
+     */
+    public function setAttachments(Collection $attachments)
+    {
+        $this->attachments = $attachments;
+
+        return $this;
     }
 }
