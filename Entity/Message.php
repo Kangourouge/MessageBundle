@@ -33,14 +33,14 @@ class Message implements MessageInterface
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KRG\UserBundle\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * @var UserInterface
      */
     protected $user;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     protected $body;
@@ -188,5 +188,12 @@ class Message implements MessageInterface
         $this->attachments = $attachments;
 
         return $this;
+    }
+
+    /**
+     * @return null|FileInterface
+     */
+    public function getThumbnail() {
+        return $this->attachments->first() ?: null;
     }
 }

@@ -3,7 +3,7 @@
 namespace KRG\MessageBundle\Form\Type;
 
 use EMC\FileinputBundle\Form\Type\FileinputType;
-use KRG\MessageBundle\Entity\Message;
+use KRG\MessageBundle\Entity\MessageInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,7 +13,9 @@ class MessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body', TextareaType::class)
+        $builder->add('body', TextareaType::class, [
+                    'required' => false
+                ])
                 ->add('attachments', FileinputType::class, [
                     'multiple' => true,
                     'required' => false
@@ -22,6 +24,6 @@ class MessageType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('data_class', Message::class);
+        $resolver->setDefault('data_class', MessageInterface::class);
     }
 }

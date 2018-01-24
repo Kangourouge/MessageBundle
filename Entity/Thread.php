@@ -25,6 +25,7 @@ class Thread implements ThreadInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KRG\MessageBundle\Entity\MessageInterface", mappedBy="thread", cascade={"all"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     protected $messages;
 
