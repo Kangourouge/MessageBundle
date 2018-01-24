@@ -2,6 +2,7 @@
 
 namespace KRG\MessageBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -9,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * Class Thread
  * @package KRG\MessageBundle\Entity
- * @ORM\Entity()
+ * @ORM\MappedSuperclass
  */
 class Thread implements ThreadInterface
 {
@@ -23,7 +24,7 @@ class Thread implements ThreadInterface
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="MessageInterface", mappedBy="thread", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KRG\MessageBundle\Entity\MessageInterface", mappedBy="thread", cascade={"all"})
      */
     protected $messages;
 
@@ -101,7 +102,7 @@ class Thread implements ThreadInterface
     /**
      * Get messages
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getMessages()
     {

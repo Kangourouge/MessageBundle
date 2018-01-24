@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use EMC\FileinputBundle\Entity\FileInterface;
-use KRG\UserBundle\Entity\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class Message
  * @package KRG\MessageBundle\Entity
- * @ORM\Entity()
+ * @ORM\MappedSuperclass
  */
 class Message implements MessageInterface
 {
@@ -169,7 +169,7 @@ class Message implements MessageInterface
     /**
      * Get attachments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAttachments()
     {

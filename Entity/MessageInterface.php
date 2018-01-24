@@ -4,7 +4,7 @@ namespace KRG\MessageBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use EMC\FileinputBundle\Entity\FileInterface;
-use KRG\UserBundle\Entity\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 interface MessageInterface
 {
@@ -34,7 +34,7 @@ interface MessageInterface
     /**
      * Set thread
      *
-     * @param \KRG\MessageBundle\Entity\ThreadInterface $thread
+     * @param ThreadInterface $thread
      *
      * @return Message
      */
@@ -43,14 +43,14 @@ interface MessageInterface
     /**
      * Get thread
      *
-     * @return \KRG\MessageBundle\Entity\ThreadInterface
+     * @return ThreadInterface
      */
     public function getThread();
 
     /**
      * Set user
      *
-     * @param \KRG\UserBundle\Entity\UserInterface $user
+     * @param UserInterface $user
      *
      * @return Message
      */
@@ -59,7 +59,7 @@ interface MessageInterface
     /**
      * Get user
      *
-     * @return \KRG\MessageBundle\Entity\UserInterface
+     * @return UserInterface
      */
     public function getUser();
 
@@ -82,7 +82,7 @@ interface MessageInterface
     /**
      * Get attachments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAttachments();
 

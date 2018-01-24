@@ -2,6 +2,8 @@
 
 namespace KRG\MessageBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 interface ThreadInterface
 {
     /**
@@ -46,7 +48,7 @@ interface ThreadInterface
     /**
      * Get messages
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getMessages();
 }
