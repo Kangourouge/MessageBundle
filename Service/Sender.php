@@ -28,14 +28,14 @@ class Sender implements SenderInterface
      * @param string $from
      * @param array|null $bcc
      */
-    public function __construct(SenderHelperInterface $helper, $from, array $bcc = array())
+    public function __construct(SenderHelperInterface $helper, $from, array $bcc = [])
     {
         $this->helper = $helper;
         $this->from = $from;
         $this->bcc = $bcc;
     }
 
-    public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
+    public function send($to, $body, $subject = null, $from = null, array $bcc = [], array $attachments = [])
     {
         return $this->helper->send($to, $body, $subject, $from ?: $this->from, array_merge($bcc, $this->bcc), $attachments);
     }
