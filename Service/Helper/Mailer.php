@@ -1,6 +1,6 @@
 <?php
 
-namespace KRG\MessageBundle\Sender\Helper;
+namespace KRG\MessageBundle\Service\Helper;
 
 class Mailer implements SenderHelperInterface
 {
@@ -19,7 +19,7 @@ class Mailer implements SenderHelperInterface
         $this->mailer = $mailer;
     }
 
-    public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
+    public function send($to, $body, $subject = null, $from = null, array $bcc = [], array $attachments = [])
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)

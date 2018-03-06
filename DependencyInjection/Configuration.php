@@ -2,17 +2,12 @@
 
 namespace KRG\MessageBundle\DependencyInjection;
 
-use KRG\MessageBundle\Sender\Helper\Mailer;
-use KRG\MessageBundle\Sender\Helper\Sms;
-use KRG\MessageBundle\Sender\Sender;
+use KRG\MessageBundle\Service\Sender;
+use KRG\MessageBundle\Service\Helper\Esendex;
+use KRG\MessageBundle\Service\Helper\Mailer;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/configuration.html}
- */
 class Configuration implements ConfigurationInterface
 {
     /**
@@ -30,8 +25,8 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('mailer')
                             ->children()
-                                ->scalarNode('helper')->cannotBeEmpty()->defaultValue('krg.message.helper.mailer')->end()
-                                ->scalarNode('from')->end()
+                                ->scalarNode('helper')->cannotBeEmpty()->defaultValue(Mailer::class)->end()
+                                ->scalarNode('from')->isRequired()->cannotBeEmpty()->end()
                                 ->arrayNode('bcc')
                                     ->prototype('scalar')->end()
                                 ->end()
@@ -39,7 +34,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->arrayNode('esendex')
                             ->children()
-                                ->scalarNode('helper')->cannotBeEmpty()->defaultValue('krg.message.helper.esendex')->end()
+                                ->scalarNode('helper')->cannotBeEmpty()->defaultValue(Esendex::class)->end()
                                 ->scalarNode('account')->isRequired()->cannotBeEmpty()->end()
                                 ->scalarNode('login')->isRequired()->cannotBeEmpty()->end()
                                 ->scalarNode('password')->isRequired()->cannotBeEmpty()->end()

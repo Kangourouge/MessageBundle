@@ -1,20 +1,21 @@
 services:
-    krg.message.listener:
-        class: KRG\MessageBundle\Listener\MessageListener
-        arguments: ['@krg.message.sender.registry', '@templating', '@monolog.logger']
-        tags:
-            - { name: kernel.event_subscriber }
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-    krg.message.sender.registry:
-        class: KRG\MessageBundle\Sender\SenderRegistry
-        arguments: [[]]
-        calls:
-          - [setContainer, ['@service_container']]
+    KRG\MessageBundle\Listener\MessageListener:
+        tags: ['kernel.event_subscriber']
 
-    krg.message.sender:
-        abstract:  true
-        class: KRG\MessageBundle\Sender\Sender
-        arguments: [ null ]
+    KRG\MessageBundle\Service\Helper\:
+        resource: '../../Service/Helper/*'
 
-    krg.message.helper.mailer:
-        class: KRG\MessageBundle\Sender\Helper\Mailer
+    KRG\MessageBundle\Service\Registry\:
+        resource: '../../Service/Registry/*'
+
+    KRG\MessageBundle\Service\Factory\:
+        resource: '../../Service/Factory/*'
+        public: true
+
+    KRG\MessageBundle\Service\Sender:
+        abstract: true

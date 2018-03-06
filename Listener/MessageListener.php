@@ -4,11 +4,14 @@ namespace KRG\MessageBundle\Listener;
 
 use KRG\MessageBundle\Event\MessageEvents;
 use KRG\MessageBundle\Event\MessageInterface;
-use KRG\MessageBundle\Sender\SenderRegistry;
+use KRG\MessageBundle\Service\Registry\SenderRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Templating\EngineInterface;
 
+/**
+ * NOT USED
+ */
 class MessageListener implements EventSubscriberInterface
 {
     /**
@@ -42,9 +45,9 @@ class MessageListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             MessageEvents::SEND => 'onSend',
-        );
+        ];
     }
 
     public function onSend(MessageInterface $message)

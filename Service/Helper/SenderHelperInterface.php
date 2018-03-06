@@ -1,8 +1,8 @@
 <?php
 
-namespace KRG\MessageBundle\Sender\Helper;
+namespace KRG\MessageBundle\Service\Helper;
 
-use KRG\MessageBundle\Sender\SenderInterface;
+use KRG\MessageBundle\Service\SenderInterface;
 
 interface SenderHelperInterface extends SenderInterface
 {

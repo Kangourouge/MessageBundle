@@ -2,6 +2,8 @@
 
 namespace KRG\MessageBundle\DependencyInjection;
 
+use KRG\MessageBundle\Service\Helper\Esendex;
+use KRG\MessageBundle\Service\Registry\SenderRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Reference;
@@ -27,33 +29,22 @@ class KRGMessageExtension extends Extension
         $loader->load('services.yml');
 
         foreach ($config['senders'] as $name => $sender) {
-
-            $helper = null;
-            if (class_exists($sender['helper'])) {
-                $helper = new $sender['helper'];
-            } else {
-                if ($sender['helper'] === 'krg.message.helper.mailer') {
-                    $loader->load('mailer.yml');
-                }
-
-                if ($sender['helper'] === 'krg.message.helper.esendex') {
-                    $loader->load('esendex.yml');
-                    $container->setParameter('krg_message_esendex_account', $sender['account']);
-                    $container->setParameter('krg_message_esendex_login', $sender['login']);
-                    $container->setParameter('krg_message_esendex_password', $sender['password']);
-                    $container->setParameter('krg_message_esendex_from', $sender['from']);
-                }
-
-                $helper = new Reference($sender['helper']);
+            if ($sender['helper'] === Esendex::class) {
+                $container->setParameter('krg_message_esendex_account', $sender['account']);
+                $container->setParameter('krg_message_esendex_login', $sender['login']);
+                $container->setParameter('krg_message_esendex_password', $sender['password']);
+                $container->setParameter('krg_message_esendex_from', $sender['from']);
             }
 
+            // Create Sender services with different Helper (Mailer, Esendex, ...) based on config
             $container
-                ->register('krg.message.sender.'.$name, $config['class'])
-                ->addArgument($helper)
+                ->register(SenderRegistry::SENDER_PREFIX.$name, $config['class'])
+                ->addArgument(new Reference($sender['helper']))
                 ->addArgument(isset($sender['from']) ? $sender['from'] : null)
                 ->addArgument(isset($sender['bcc']) ? $sender['bcc'] : array())
                 ->addTag('message.sender', array('alias' => $name))
-                ;
+                ->setAutowired(true)
+                ->setAutoconfigured(true);
         }
     }
 }

@@ -2,8 +2,9 @@
 
 namespace KRG\MessageBundle\Event;
 
-use KRG\MessageBundle\Sender\SenderInterface;
+use KRG\MessageBundle\Service\SenderInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 abstract class AbstractMessage extends Event implements MessageInterface
@@ -18,6 +19,11 @@ abstract class AbstractMessage extends Event implements MessageInterface
      */
     protected $exception;
 
+    /**
+     * @var array
+     */
+    protected $options;
+
     public function getFrom()
     {
         return null;
@@ -25,7 +31,7 @@ abstract class AbstractMessage extends Event implements MessageInterface
 
     public function getBcc()
     {
-        return array();
+        return [];
     }
 
     public function getSender()
@@ -33,9 +39,21 @@ abstract class AbstractMessage extends Event implements MessageInterface
         return 'mailer';
     }
 
+    public function configureOptions(OptionsResolver $resolver)
+    {
+    }
+
+    public function setOptions(array $options = [])
+    {
+        $resolver = new OptionsResolver();
+
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
+    }
+
     public function getAttachments()
     {
-        return array();
+        return [];
     }
 
     public function isSent()
@@ -60,6 +78,11 @@ abstract class AbstractMessage extends Event implements MessageInterface
 
     public function send(SenderInterface $sender, EngineInterface $templating)
     {
-        return $sender->send($this->getTo(), $this->getBody($templating), $this->getSubject(), $this->getFrom(), $this->getBcc(), $this->getAttachments());
+        return $sender->send($this->getTo(),
+            $this->getBody($templating),
+            $this->getSubject(),
+            $this->getFrom(),
+            $this->getBcc(),
+            $this->getAttachments());
     }
 }

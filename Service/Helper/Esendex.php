@@ -1,6 +1,6 @@
 <?php
 
-namespace KRG\MessageBundle\Sender\Helper;
+namespace KRG\MessageBundle\Service\Helper;
 
 use Esendex\Authentication\LoginAuthentication;
 use Esendex\DispatchService;
@@ -27,12 +27,10 @@ class Esendex implements SenderHelperInterface
         $this->esendex = new DispatchService($authentication);
     }
 
-    public function send($to, $body, $subject = null, $from = null, array $bcc = array(), array $attachments = array())
+    public function send($to, $body, $subject = null, $from = null, array $bcc = [], array $attachments = [])
     {
         $message = new DispatchMessage($from ?: "Message", $to, $body, Message::SmsType);
 
-        $this->esendex->send($message);
-
-        return true;
+        return $this->esendex->send($message);
     }
 }

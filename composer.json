@@ -7,10 +7,14 @@
     {
       "name" : "Chafiq El Mechrafi",
       "email": "chafiq.elmechrafi@gmail.com"
+    },
+    {
+      "name" : "Arthur Miniconi",
+      "email": "arthur.miniconi@gmail.com"
     }
   ],
   "require"    : {
-    "php"                     : ">=5.3.9",
+    "php"                     : "7.*",
     "symfony/framework-bundle": "~2.1|~3.0"
   },
   "autoload"   : {

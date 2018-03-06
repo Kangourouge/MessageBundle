@@ -1,8 +1,8 @@
 <?php
 
-namespace KRG\MessageBundle\Sender;
+namespace KRG\MessageBundle\Service;
 
-use KRG\MessageBundle\Sender\Helper\SenderHelperInterface;
+use KRG\MessageBundle\Service\Helper\SenderHelperInterface;
 
 class Sender implements SenderInterface
 {
