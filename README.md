@@ -9,7 +9,8 @@ AppKernel
 public function registerBundles()
 {
     $bundles = array(
-        new KRG\MessageBundle\KRGMessageBundle()
+        new KRG\MessageBundle\KRGMessageBundle(),
+        new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
     );
 }
 ```
@@ -20,6 +21,13 @@ Configuration
 
 ```yaml
 # app/config/config.yml
+
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
 
 krg_message:
     class: KRG\MessageBundle\Service\Sender # default
