@@ -19,15 +19,21 @@ class Mailer implements SenderHelperInterface
         $this->mailer = $mailer;
     }
 
+    /**
+     * @param       $to
+     * @param       $body
+     * @param null  $subject
+     * @param null  $from
+     * @param array $bcc
+     * @param array $attachments
+     * @return int
+     */
     public function send($to, $body, $subject = null, $from = null, array $bcc = [], array $attachments = [])
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
+        $message = (new \Swift_Message($subject, $body, 'text/html'))
             ->setTo($to)
             ->setFrom($from)
-            ->setBcc($bcc)
-            ->setBody($body)
-            ->setContentType('text/html');
+            ->setBcc($bcc);
 
         foreach ($attachments as $attachment) {
             if (!$attachment instanceof \Swift_Attachment) {
