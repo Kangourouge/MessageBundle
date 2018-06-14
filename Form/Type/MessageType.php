@@ -18,7 +18,8 @@ class MessageType extends AbstractType
                 ])
                 ->add('attachments', FileinputType::class, [
                     'multiple' => true,
-                    'required' => false
+                    'required' => false,
+                    'drop_zone' => true,
                 ]);
     }
 
