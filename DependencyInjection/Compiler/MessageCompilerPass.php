@@ -15,7 +15,7 @@ class MessageCompilerPass implements CompilerPassInterface
         // Add only configurated senders
         $senderRegistryDefinition = $container->getDefinition(SenderRegistry::class);
         foreach ($container->findTaggedServiceIds('message.sender') as $id => $config) {
-            $senderRegistryDefinition->addMethodCall('addSender', [new Reference($id), $id]);
+            $senderRegistryDefinition->addMethodCall('addSender', [new Reference($id), $id, $config[0]['alias'] ?? null]);
         }
 
         // Add messages

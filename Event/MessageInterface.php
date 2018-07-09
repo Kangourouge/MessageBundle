@@ -9,9 +9,19 @@ use Symfony\Component\Templating\EngineInterface;
 interface MessageInterface
 {
     /**
+     * @return array|string[]
+     */
+    public function getTo();
+
+    /**
      * @return null|string
      */
     public function getFrom();
+
+    /**
+     * @return string
+     */
+    public function getSubject();
 
     /**
      * @return array|string[]
@@ -21,7 +31,12 @@ interface MessageInterface
     /**
      * @return string
      */
-    public function getSender();
+    public function getBody();
+
+    /**
+     * @return array|\Swift_Attachment[]
+     */
+    public function getAttachments();
 
     /**
      * @param OptionsResolver $resolver
@@ -34,11 +49,6 @@ interface MessageInterface
      * @return mixed|void
      */
     public function setOptions(array $options = []);
-
-    /**
-     * @return array|\Swift_Attachment[]
-     */
-    public function getAttachments();
 
     /**
      * @return bool
@@ -59,11 +69,4 @@ interface MessageInterface
      * @param \Exception $exception
      */
     public function setException(\Exception $exception);
-
-    /**
-     * @param SenderInterface $sender
-     * @param EngineInterface $templating
-     * @return mixed
-     */
-    public function send(SenderInterface $sender, EngineInterface $templating);
 }

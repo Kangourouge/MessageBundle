@@ -28,23 +28,18 @@ class KRGMessageExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        foreach ($config['senders'] as $name => $sender) {
-            if ($sender['helper'] === Esendex::class) {
-                $container->setParameter('krg_message_esendex_account', $sender['account']);
-                $container->setParameter('krg_message_esendex_login', $sender['login']);
-                $container->setParameter('krg_message_esendex_password', $sender['password']);
-                $container->setParameter('krg_message_esendex_from', $sender['from']);
+        foreach ($config['senders'] as $name => $_config) {
+            foreach ($_config as $key => $value) {
+                $container->setParameter(sprintf('krg_message_%s_%s', $name, $key), $value);
             }
 
             // Create Sender services with different Helper (Mailer, Esendex, ...) based on config
             $container
-                ->register(SenderRegistry::SENDER_PREFIX.$name, $config['class'])
-                ->addArgument(new Reference($sender['helper']))
-                ->addArgument(isset($sender['from']) ? $sender['from'] : null)
-                ->addArgument(isset($sender['bcc']) ? $sender['bcc'] : array())
-                ->addTag('message.sender', array('alias' => $name))
-                ->setAutowired(true)
-                ->setAutoconfigured(true);
+                ->register(sprintf('krg.message.%s', $name), $config['class'])
+                ->addTag('message.sender', ['alias' => $name])
+                ->setArgument(0, new Reference($_config['helper']))
+                ->setAutoconfigured(true)
+                ->setAutowired(true);
         }
     }
 }

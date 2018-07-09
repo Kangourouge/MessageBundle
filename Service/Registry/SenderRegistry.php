@@ -6,8 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SenderRegistry
 {
-    const SENDER_PREFIX = 'krg.message.';
-
     /**
      * @var ContainerInterface
      */
@@ -28,9 +26,9 @@ class SenderRegistry
      * @param $sender
      * @param $name
      */
-    public function addSender($sender, $name)
+    public function addSender($sender, $name, $alias = null)
     {
-        $this->senders[$name] = $sender;
+        $this->senders[$alias ?: $name] = $sender;
     }
 
     /**
@@ -40,15 +38,15 @@ class SenderRegistry
      */
     public function get($name)
     {
-        if (!array_key_exists(self::SENDER_PREFIX.$name, $this->senders)) {
+        if (!isset($this->senders[$name])) {
             throw new \InvalidArgumentException(sprintf('The sender "%s" is not registered with the service container.', $name));
         }
 
-        if (is_string($this->senders[self::SENDER_PREFIX.$name])) {
-            $this->senders[self::SENDER_PREFIX.$name] = $this->container->get($this->senders[self::SENDER_PREFIX.$name]);
+        if (is_string($this->senders[$name])) {
+            $this->senders[$name] = $this->container->get($this->senders[$name]);
         }
 
-        return $this->senders[self::SENDER_PREFIX.$name];
+        return $this->senders[$name];
     }
 
     /**
@@ -71,6 +69,6 @@ class SenderRegistry
      */
     public function has($name)
     {
-        return isset($this->senders[self::SENDER_PREFIX.$name]);
+        return isset($this->senders[$name]);
     }
 }

@@ -52,7 +52,7 @@ class MessageRegistry
      */
     public function get($name)
     {
-        if (!array_key_exists($name, $this->messages)) {
+        if (!$this->messages[$name]) {
             throw new \InvalidArgumentException(sprintf('The sender "%s" is not registered with the service container.', $name));
         }
 

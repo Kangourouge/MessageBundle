@@ -12,31 +12,29 @@ class Sender implements SenderInterface
     protected $helper;
 
     /**
-     * @var string
-     */
-    protected $from;
-
-    /**
-     * @var array|null
-     */
-    protected $bcc;
-
-    /**
      * Sender constructor.
      *
      * @param SenderHelperInterface $helper
      * @param string $from
-     * @param array|null $bcc
+     * @param array $bcc
      */
-    public function __construct(SenderHelperInterface $helper, $from, array $bcc = [])
+    public function __construct(SenderHelperInterface $helper)
     {
         $this->helper = $helper;
-        $this->from = $from;
-        $this->bcc = $bcc;
     }
 
-    public function send($to, $body, $subject = null, $from = null, array $bcc = [], array $attachments = [])
+    /**
+     * @param $to
+     * @param $body
+     * @param null $subject
+     * @param null $from
+     * @param array $bcc
+     * @param array $attachments
+     *
+     * @return bool
+     */
+    public function send(array $to, string $body, string $subject = null, string $from = null, array $bcc = [], array $attachments = [])
     {
-        return $this->helper->send($to, $body, $subject, $from ?: $this->from, array_merge($bcc, $this->bcc), $attachments);
+        return $this->helper->send($to, $body, $subject, $from, $bcc, $attachments);
     }
 }

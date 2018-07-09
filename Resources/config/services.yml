@@ -10,6 +10,11 @@ services:
     KRG\MessageBundle\Service\Helper\:
         resource: '../../Service/Helper/*'
 
+    KRG\MessageBundle\Service\Helper\Mailer:
+        arguments:
+            $from: '%krg_message_mailer_from%'
+            $bcc: '%krg_message_mailer_bcc%'
+
     KRG\MessageBundle\Service\Registry\:
         resource: '../../Service/Registry/*'
 
@@ -19,3 +24,8 @@ services:
 
     KRG\MessageBundle\Service\Sender:
         abstract: true
+
+    KRG\MessageBundle\Form\Type\:
+        resource: '../../Form/Type/*'
+        tags:
+            - { name: 'form.type' }

@@ -52,13 +52,6 @@ class MessageListener implements EventSubscriberInterface
 
     public function onSend(MessageInterface $message)
     {
-        try {
-            $ret = $message->send($this->registry->get($message->getSender()), $this->templating);
-            $message->setSent((bool)$ret);
-            $this->logger->info(sprintf('KRG/MessageBundle: message sent - Return: %s', $ret));
-        } catch (\Exception $e) {
-            $message->setException($e);
-            $this->logger->error(sprintf('An error occurred: %s', $e->getMessage()));
-        }
+        $message->send();
     }
 }

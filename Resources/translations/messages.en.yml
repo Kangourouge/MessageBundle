@@ -1,0 +1,6 @@
+form:
+  blacklist:
+    messages:
+      label: Messages
+    submit:
+      label: Submit
