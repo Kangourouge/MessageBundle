@@ -116,6 +116,10 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
     {
         try {
             $to = $this->getTo();
+            
+            if (is_string($to)) {
+                $to = (array)$to;
+            }
 
             $to = array_diff($to, $this->getBlacklist($to));
 
