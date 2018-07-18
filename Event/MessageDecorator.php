@@ -3,9 +3,10 @@
 namespace KRG\MessageBundle\Event;
 
 use Doctrine\ORM\EntityManagerInterface;
-use KRG\MessageBundle\Entity\Blacklist;
+use Doctrine\ORM\EntityRepository;
 use KRG\MessageBundle\Entity\BlacklistInterface;
 use KRG\MessageBundle\Service\Registry\SenderRegistry;
+use KRG\MessageBundle\Service\SenderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageDecorator implements MessageInterface, MessageSendInterface
@@ -93,7 +94,8 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
         return $this->message->setException($exception);
     }
 
-    private function getBlacklist(array $addresses) {
+    private function getBlacklist(array $addresses)
+    {
         /** @var EntityRepository $blacklistRepository */
         $blacklistRepository = $this->entityManager->getRepository(BlacklistInterface::class);
 
@@ -117,6 +119,10 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
         try {
             $to = $this->getTo();
 
+            if (is_string($to)) {
+                $to = [$to];
+            }
+
             $to = array_diff($to, $this->getBlacklist($to));
 
             if (count($to) === 0) {
@@ -125,6 +131,7 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
 
             /** @var SenderInterface $sender */
             $sender = $this->senderRegistry->get($this->message->getOption('sender'));
+
             return $this->sent = $sender->send(
                 $to,
                 $this->getBody(),
@@ -139,7 +146,7 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
         }
 
         $this->sent = false;
+
         return false;
     }
-
 }
