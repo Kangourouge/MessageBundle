@@ -2,10 +2,11 @@
 
 namespace KRG\MessageBundle\Event;
 
-use Doctrine\ORM\EntityManagerInterface;
-use KRG\MessageBundle\Entity\Blacklist;
+use Psr\Log\LoggerInterface;
+use KRG\MessageBundle\Service\SenderInterface;
 use KRG\MessageBundle\Entity\BlacklistInterface;
 use KRG\MessageBundle\Service\Registry\SenderRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageDecorator implements MessageInterface, MessageSendInterface
@@ -16,21 +17,18 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
     /** @var SenderRegistry */
     protected $senderRegistry;
 
+    /** @var LoggerInterface */
+    protected $logger;
+
     /** @var MessageInterface */
     private $message;
 
-    /**
-     * MessageDecorator constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param SenderRegistry $senderRegistry
-     * @param MessageInterface $message
-     */
-    public function __construct(EntityManagerInterface $entityManager, SenderRegistry $senderRegistry, MessageInterface $message)
+    public function __construct(EntityManagerInterface $entityManager, SenderRegistry $senderRegistry, LoggerInterface $logger, MessageInterface $message)
     {
         $this->entityManager = $entityManager;
         $this->senderRegistry = $senderRegistry;
         $this->message = $message;
+        $this->logger = $logger;
     }
 
     public function getTo()
@@ -93,7 +91,8 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
         return $this->message->setException($exception);
     }
 
-    private function getBlacklist(array $addresses) {
+    private function getBlacklist(array $addresses)
+    {
         /** @var EntityRepository $blacklistRepository */
         $blacklistRepository = $this->entityManager->getRepository(BlacklistInterface::class);
 
@@ -109,26 +108,23 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
         return array_column($data, 'address');
     }
 
-    /**
-     * @return bool
-     */
     public function send()
     {
         try {
             $to = $this->getTo();
-            
+
             if (is_string($to)) {
                 $to = (array)$to;
             }
 
             $to = array_diff($to, $this->getBlacklist($to));
-
             if (count($to) === 0) {
                 return true;
             }
 
             /** @var SenderInterface $sender */
             $sender = $this->senderRegistry->get($this->message->getOption('sender'));
+
             return $this->sent = $sender->send(
                 $to,
                 $this->getBody(),
@@ -139,10 +135,11 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
             );
         } catch (\Exception $exception) {
             $this->exception = $exception;
-            dump($exception);
+            $this->logger->error($exception->getMessage());
         }
 
         $this->sent = false;
+
         return false;
     }
 
