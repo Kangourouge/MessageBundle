@@ -23,7 +23,7 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
     /** @var MessageInterface */
     private $message;
 
-    public function __construct(EntityManagerInterface $entityManager, SenderRegistry $senderRegistry, LoggerInterface $logger, MessageInterface $message)
+    public function __construct(EntityManagerInterface $entityManager, SenderRegistry $senderRegistry, MessageInterface $message, LoggerInterface $logger)
     {
         $this->entityManager = $entityManager;
         $this->senderRegistry = $senderRegistry;
@@ -142,5 +142,4 @@ class MessageDecorator implements MessageInterface, MessageSendInterface
 
         return false;
     }
-
 }

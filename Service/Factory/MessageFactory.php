@@ -4,11 +4,9 @@ namespace KRG\MessageBundle\Service\Factory;
 
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use KRG\MessageBundle\Entity\MessageInterface;
 use KRG\MessageBundle\Event\MessageDecorator;
-use KRG\MessageBundle\Service\Registry\MessageRegistry;
 use KRG\MessageBundle\Service\Registry\SenderRegistry;
-use Symfony\Component\Templating\EngineInterface;
+use KRG\MessageBundle\Service\Registry\MessageRegistry;
 
 class MessageFactory
 {
@@ -24,31 +22,19 @@ class MessageFactory
     /** @var LoggerInterface */
     private $logger;
 
-    /**
-     * MessageFactory constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param SenderRegistry $senderRegistry
-     * @param MessageRegistry $messageRegistry
-     */
-    public function __construct(EntityManagerInterface $entityManager, SenderRegistry $senderRegistry, MessageRegistry $messageRegistry)
+    public function __construct(EntityManagerInterface $entityManager, SenderRegistry $senderRegistry, MessageRegistry $messageRegistry, LoggerInterface $logger)
     {
         $this->entityManager = $entityManager;
         $this->senderRegistry = $senderRegistry;
         $this->messageRegistry = $messageRegistry;
+        $this->logger = $logger;
     }
 
-    /**
-     * @param       $name
-     * @param array $options
-     * @return $this
-     * @throws \Exception
-     */
     public function create($name, $options = [])
     {
         $message = $this->messageRegistry->get($name);
         $message->setOptions($options);
 
-        return new MessageDecorator($this->entityManager, $this->senderRegistry, $message);
+        return new MessageDecorator($this->entityManager, $this->senderRegistry, $message, $this->logger);
     }
 }
