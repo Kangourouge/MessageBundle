@@ -15,8 +15,7 @@
   ],
   "require"    : {
     "php"                       : "7.*",
-    "symfony/framework-bundle"  : "~3.0",
-    "symfony/swiftmailer-bundle": "3.*"
+    "symfony/framework-bundle"  : "~3.0"
   },
   "autoload"   : {
     "psr-0": {
