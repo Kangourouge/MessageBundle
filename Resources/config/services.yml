@@ -1,20 +1,31 @@
 services:
-    krg.message.listener:
-        class: KRG\MessageBundle\Listener\MessageListener
-        arguments: ['@krg.message.sender.registry', '@templating', '@monolog.logger']
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    KRG\MessageBundle\Listener\MessageListener:
+        tags: ['kernel.event_subscriber']
+
+    KRG\MessageBundle\Service\Helper\:
+        resource: '../../Service/Helper/*'
+
+    KRG\MessageBundle\Service\Helper\Mailer:
+        arguments:
+            $from: '%krg_message_mailer_from%'
+            $bcc: '%krg_message_mailer_bcc%'
+
+    KRG\MessageBundle\Service\Registry\:
+        resource: '../../Service/Registry/*'
+
+    KRG\MessageBundle\Service\Factory\:
+        resource: '../../Service/Factory/*'
+        public: true
+
+    KRG\MessageBundle\Service\Sender:
+        abstract: true
+
+    KRG\MessageBundle\Form\Type\:
+        resource: '../../Form/Type/*'
         tags:
-            - { name: kernel.event_subscriber }
-
-    krg.message.sender.registry:
-        class: KRG\MessageBundle\Sender\SenderRegistry
-        arguments: [[]]
-        calls:
-          - [setContainer, ['@service_container']]
-
-    krg.message.sender:
-        abstract:  true
-        class: KRG\MessageBundle\Sender\Sender
-        arguments: [ null ]
-
-    krg.message.helper.mailer:
-        class: KRG\MessageBundle\Sender\Helper\Mailer
+            - { name: 'form.type' }

@@ -2,25 +2,21 @@
 
 namespace KRG\MessageBundle\Event;
 
-use KRG\MessageBundle\Sender\SenderInterface;
+use KRG\MessageBundle\Service\SenderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 interface MessageInterface
 {
     /**
-     * @return string
-     */
-    public function getSender();
-
-    /**
-     * @return string
-     */
-    public function getFrom();
-
-    /**
-     * @return string
+     * @return array|string[]
      */
     public function getTo();
+
+    /**
+     * @return null|string
+     */
+    public function getFrom();
 
     /**
      * @return string
@@ -28,24 +24,49 @@ interface MessageInterface
     public function getSubject();
 
     /**
-     * @return string
-     */
-    public function getBody(EngineInterface $templating);
-
-    /**
-     * @return string[]
+     * @return array|string[]
      */
     public function getBcc();
 
     /**
-     * @return \Swift_Attachment[]
+     * @return string
+     */
+    public function getBody();
+
+    /**
+     * @return array|\Swift_Attachment[]
      */
     public function getAttachments();
 
     /**
-     * @param SenderInterface $sender
-     *
-     * @return mixed
+     * @param OptionsResolver $resolver
+     * @return mixed|void
      */
-    public function send(SenderInterface $sender, EngineInterface $templating);
+    public function configureOptions(OptionsResolver $resolver);
+
+    /**
+     * @param array $options
+     * @return mixed|void
+     */
+    public function setOptions(array $options = []);
+
+    /**
+     * @return bool
+     */
+    public function isSent();
+
+    /**
+     * @param $sent
+     */
+    public function setSent($sent);
+
+    /**
+     * @return \Exception
+     */
+    public function getException();
+
+    /**
+     * @param \Exception $exception
+     */
+    public function setException(\Exception $exception);
 }

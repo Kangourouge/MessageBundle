@@ -1,13 +1,13 @@
 <?php
 
-namespace KRG\MessageBundle\Sender;
+namespace KRG\MessageBundle\Service\Registry;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SenderRegistry
 {
     /**
-     * @var Container
+     * @var ContainerInterface
      */
     protected $container;
 
@@ -16,28 +16,29 @@ class SenderRegistry
      */
     private $senders;
 
-    function __construct(array $senders)
+    function __construct(ContainerInterface $container)
     {
-        $this->senders = $senders;
+        $this->container = $container;
+        $this->senders = [];
     }
 
     /**
-     * @param Container $container
+     * @param $sender
+     * @param $name
      */
-    public function setContainer($container)
+    public function addSender($sender, $name, $alias = null)
     {
-        $this->container = $container;
+        $this->senders[$alias ?: $name] = $sender;
     }
 
     /**
      * @param $name
-     *
-     * @return SenderInterface
+     * @return mixed
+     * @throws \Exception
      */
     public function get($name)
     {
-
-        if (!array_key_exists($name, $this->senders)) {
+        if (!isset($this->senders[$name])) {
             throw new \InvalidArgumentException(sprintf('The sender "%s" is not registered with the service container.', $name));
         }
 
@@ -50,6 +51,7 @@ class SenderRegistry
 
     /**
      * @return array
+     * @throws \Exception$
      */
     public function all()
     {

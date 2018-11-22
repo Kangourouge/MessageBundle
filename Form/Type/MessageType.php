@@ -13,14 +13,15 @@ class MessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body', TextareaType::class, [
-                    'required' => false
-                ])
-                ->add('attachments', FileinputType::class, [
-                    'multiple' => true,
-                    'required' => false,
-                    'drop_zone' => true,
-                ]);
+        $builder
+            ->add('body', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('attachments', FileinputType::class, [
+                'multiple'  => true,
+                'required'  => false,
+                'drop_zone' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

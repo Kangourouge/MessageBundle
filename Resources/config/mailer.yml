@@ -1,4 +1,0 @@
-services:
-    krg.message.helper.mailer:
-        class: KRG\MessageBundle\Sender\Helper\Mailer
-        arguments: ['@mailer']
