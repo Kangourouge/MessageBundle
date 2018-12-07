@@ -2,9 +2,7 @@
 
 namespace KRG\MessageBundle\Event;
 
-use KRG\MessageBundle\Service\SenderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
 
 interface MessageInterface
 {

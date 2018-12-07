@@ -3,7 +3,6 @@
 namespace KRG\MessageBundle\Controller;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Doctrine\ORM\EntityRepository;
 use KRG\MessageBundle\Entity\Blacklist;
 use KRG\MessageBundle\Entity\BlacklistInterface;
 use KRG\MessageBundle\Form\Type\BlacklistType;

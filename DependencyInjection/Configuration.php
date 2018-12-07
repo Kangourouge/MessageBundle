@@ -2,9 +2,9 @@
 
 namespace KRG\MessageBundle\DependencyInjection;
 
-use KRG\MessageBundle\Service\Sender;
 use KRG\MessageBundle\Service\Helper\Esendex;
 use KRG\MessageBundle\Service\Helper\Mailer;
+use KRG\MessageBundle\Service\Sender;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

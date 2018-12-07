@@ -2,11 +2,11 @@
 
 namespace KRG\MessageBundle\Event;
 
-use Psr\Log\LoggerInterface;
-use KRG\MessageBundle\Service\SenderInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use KRG\MessageBundle\Entity\BlacklistInterface;
 use KRG\MessageBundle\Service\Registry\SenderRegistry;
-use Doctrine\ORM\EntityManagerInterface;
+use KRG\MessageBundle\Service\SenderInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageDecorator implements MessageInterface, MessageSendInterface

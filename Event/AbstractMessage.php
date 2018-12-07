@@ -2,14 +2,9 @@
 
 namespace KRG\MessageBundle\Event;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use KRG\MessageBundle\Entity\BlacklistInterface;
-use KRG\MessageBundle\Service\Registry\SenderRegistry;
 use KRG\MessageBundle\Service\SenderInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
 
 abstract class AbstractMessage extends Event implements MessageInterface
 {
