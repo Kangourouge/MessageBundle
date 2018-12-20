@@ -2,11 +2,11 @@
 
 namespace KRG\MessageBundle\Service\Factory;
 
-use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use KRG\MessageBundle\Event\MessageDecorator;
-use KRG\MessageBundle\Service\Registry\SenderRegistry;
 use KRG\MessageBundle\Service\Registry\MessageRegistry;
+use KRG\MessageBundle\Service\Registry\SenderRegistry;
+use Psr\Log\LoggerInterface;
 
 class MessageFactory
 {

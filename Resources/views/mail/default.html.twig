@@ -1,0 +1,7 @@
+{% extends '@KRGMessage/mail/layout.html.twig' %}
+
+{% block content %}
+    <p>
+        {{ ('message.' ~ message_name ~ '.body')|trans(trans_parameters|default({}))|raw|nl2br }}
+    </p>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace KRG\MessageBundle\Event;
 
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -33,21 +34,23 @@ abstract class AbstractMailMessage extends AbstractMessage
         $resolver->setDefault('sender', 'mailer');
     }
 
-    public function getSubject()
+    public function getParameters(Options $options, array $parameters)
     {
-        return $this->translator->trans(sprintf('mail.%s.subject', $this->getName()), $this->getParams());
+        return $parameters;
     }
 
-    public function getBody()
+    public function getSubject(array $parameters = [])
     {
-        return $this->templating->render($this->getTemplate(), $this->options);
+        return $this->translator->trans(sprintf('message.%s.subject', $this->getName()), $parameters);
+    }
+
+    public function getBody(array $parameters = null)
+    {
+        $parameters = array_replace(['message_name' => $this->getName()], $parameters ?: $this->options);
+        return $this->templating->render($this->getTemplate(), $parameters);
     }
 
     protected function getTemplate() {
         return sprintf('message/%s.html.twig', $this->getName());
-    }
-
-    protected function getParams() {
-        return [];
     }
 }
