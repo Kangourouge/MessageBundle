@@ -16,11 +16,14 @@ abstract class AbstractMailMessage extends AbstractMessage
     protected $templating;
 
     /**
-     * CreateProspectMessage constructor.
+     * AbstractMailMessage constructor.
      *
-     * @param EngineInterface $templating
+     * @param EngineInterface     $templating
+     * @param TranslatorInterface $translator
+     * @param null                $from
+     * @param array               $bcc
      */
-    public function __construct(EngineInterface $templating, TranslatorInterface $translator, string $from = null, array $bcc = [])
+    public function __construct(EngineInterface $templating, TranslatorInterface $translator, $from = null, array $bcc = [])
     {
         parent::__construct($from, $bcc);
 

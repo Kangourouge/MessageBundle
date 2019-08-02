@@ -26,10 +26,10 @@ abstract class AbstractMessage extends Event implements MessageInterface
     /**
      * AbstractMessage constructor.
      *
-     * @param string|null $from
+     * @param null  $from
      * @param array $bcc
      */
-    public function __construct(string $from = null, array $bcc = [])
+    public function __construct($from = null, array $bcc = [])
     {
         $this->from = $from;
         $this->bcc = $bcc;

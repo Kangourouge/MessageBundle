@@ -17,10 +17,10 @@ class Mailer implements SenderHelperInterface
      * Mailer constructor.
      *
      * @param \Swift_Mailer $mailer
-     * @param string $from
-     * @param array|null $bcc
+     * @param null          $from
+     * @param array         $bcc
      */
-    public function __construct(\Swift_Mailer $mailer, string $from = null, array $bcc = [])
+    public function __construct(\Swift_Mailer $mailer, $from = null, array $bcc = [])
     {
         $this->mailer = $mailer;
         $this->from = $from;
@@ -28,16 +28,15 @@ class Mailer implements SenderHelperInterface
     }
 
     /**
-     * @param       $to
-     * @param       $body
-     * @param null  $subject
-     * @param null  $from
-     * @param array $bcc
-     * @param array $attachments
-     *
+     * @param array       $to
+     * @param string      $body
+     * @param string|null $subject
+     * @param null        $from
+     * @param array       $bcc
+     * @param array       $attachments
      * @return bool
      */
-    public function send(array $to, string $body, string $subject = null, string $from = null, array $bcc = [], array $attachments = [])
+    public function send(array $to, string $body, string $subject = null, $from = null, array $bcc = [], array $attachments = [])
     {
         $message = new \Swift_Message($subject, $body, 'text/html');
         $message
