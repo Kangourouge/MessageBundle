@@ -27,7 +27,7 @@ class Message implements MessageInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="KRG\MessageBundle\Entity\ThreadInterface", inversedBy="messages")
-     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id", onDelete="CASCADE")
      * @var ThreadInterface
      */
     protected $thread;
