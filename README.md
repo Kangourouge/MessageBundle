@@ -1,4 +1,8 @@
-# MessageBundle
+# [LEGACY] MessageBundle
+
+**Abandoned!**
+
+Use [SwiftMailer](https://github.com/swiftmailer/swiftmailer) or [Swiftmailer bundle](https://github.com/symfony/swiftmailer-bundle) instead.
 
 AppKernel
 ---------
