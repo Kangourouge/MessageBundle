@@ -22,5 +22,6 @@
       "KRG\\MessageBundle": ""
     }
   },
-  "target-dir" : "KRG/MessageBundle"
+  "target-dir" : "KRG/MessageBundle",
+  "abandoned": true
 }
