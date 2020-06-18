@@ -23,5 +23,5 @@
     }
   },
   "target-dir" : "KRG/MessageBundle",
-  "abandoned": true
+  "abandoned": "symfony/swiftmailer-bundle"
 }
